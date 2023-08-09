@@ -1,8 +1,9 @@
-from typing import Union, Dict
+import customtkinter as ctk
+from typing import Dict
 
+from customtkinter import CTkBaseClass
 from fetch_api_data import fetch_api_data
 from clear_data import clear_data
-import customtkinter as ctk
 from PIL import Image
 
 
@@ -22,7 +23,7 @@ def configure_app(app: ctk.CTk) -> None:
 
     app.bind_all('<Button>', change_focus)
 
-    app_attributes: Dict[Union[ctk.CTkEntry, ctk.CTkLabel, ctk.CTkButton], tuple[int, int]] = {}
+    app_attributes: Dict[CTkBaseClass, tuple[int, int]] = {}
 
     city_textbox = ctk.CTkEntry(
         app, width = 250, height = 50, font = ("Verdana", 25),
