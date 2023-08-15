@@ -1,10 +1,10 @@
-import customtkinter as ctk
 import requests
-from PIL import Image
+import customtkinter as ctk
 
-from load_weather_icons import load_weather_icons
-from load_country_flags import load_country_flags
-from clear_data import clear_data
+from PIL import Image
+from BackEnd.LoadWeatherIcons import load_weather_icons
+from BackEnd.LoadCountryFlags import load_country_flags
+from FrontEnd.ClearForms import clear_forms
 
 
 def fetch_api_data(city_textbox: ctk.CTkEntry, weather_details: ctk.CTkLabel, weather_icon: ctk.CTkLabel,
@@ -12,10 +12,11 @@ def fetch_api_data(city_textbox: ctk.CTkEntry, weather_details: ctk.CTkLabel, we
     """REQUESTING API DATA ABOUT THE
        CITY SELECTED BY THE USER"""
 
+    NA = ctk.CTkImage(Image.open("FrontEnd/static/NA.jpg"), size = (90, 50))
     city = city_textbox.get()
 
     if city == '':
-        clear_data(city_textbox, weather_details, weather_icon, country_icon)
+        clear_forms(city_textbox, weather_details, weather_icon, country_icon)
         weather_details.configure(text = "City field cannot be empty!")
         return None
 
@@ -36,7 +37,7 @@ def fetch_api_data(city_textbox: ctk.CTkEntry, weather_details: ctk.CTkLabel, we
         updated_data = '\n'.join([
             f"Weather: {main}",
             f"Temperature: {temp:.1f} C°",
-            f"Pressure: {pressure}hPa",
+            f"Pressure: {pressure} hPa",
             f"Cloudiness: {cloudiness}%",
             f"Humidity: {humidity}%",
             f"Wind: {wind} m/s"
@@ -49,12 +50,11 @@ def fetch_api_data(city_textbox: ctk.CTkEntry, weather_details: ctk.CTkLabel, we
             updated_country_flag = load_country_flags()[country_domain]
             country_icon.configure(image = updated_country_flag)
         except KeyError:
-            no_country_flag = ctk.CTkImage(Image.open("static/no-country-flag.png"), size = (90, 50))
-            country_icon.configure(image = no_country_flag)
+            country_icon.configure(image = NA)
 
         weather_details.configure(text = updated_data)
         weather_icon.configure(image = updated_weather_image)
 
     except KeyError:
-        clear_data(city_textbox, weather_details, weather_icon, country_icon)
+        clear_forms(city_textbox, weather_details, weather_icon, country_icon)
         weather_details.configure(text = "City not found!")
