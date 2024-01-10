@@ -1,5 +1,5 @@
 # WeatherApp
-Simple Python GUI application for checking the weather.
+Simple Python GUI application for checking the weather. Made using the OpenWeather API and the Enchanced Tkinter - CustomTkinter
 
 Main page:
 ![main](https://github.com/Ivaylo2201/WeatherApp/assets/120925473/0a63abd0-5e09-48e4-90c4-b0b41b818239)
